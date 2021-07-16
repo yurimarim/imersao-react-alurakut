@@ -58,6 +58,8 @@ export function AlurakutMenu({ githubUser }) {
 }
 AlurakutMenu.Wrapper = styled.header`
   width: 100%;
+  /* background-image: linear-gradient(125deg, #00e4ff 0, #24b7ff 25%, #2f8bc5 50%, #2c618a 75%, #223c55 100%); */
+
   background-color: #308bc5;
 
   .alurakutMenuProfileSidebar {

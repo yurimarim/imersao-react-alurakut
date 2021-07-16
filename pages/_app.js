@@ -10,7 +10,7 @@ const GlobalStyle = createGlobalStyle`
 
   body {
     font-family: sans-serif;
-    background-image: linear-gradient(125deg, #00e4ff 0, #24b7ff 25%, #2f8bc5 50%, #2c618a 75%, #223c55 100%);;
+    background-image: linear-gradient(125deg, #00e4ff 0, #24b7ff 25%, #2f8bc5 50%, #2c618a 75%, #223c55 100%);
     /* background-image: url('https://images8.alphacoders.com/102/thumb-1920-1023439.png'); */
   }
 
