@@ -32,8 +32,7 @@ function ProfileSideBar(props) {
 
 export default function Home() {
   const githubUser = 'yurimarim'
-  // const comunities = ['Alurakut']
-  const [comunities, setComunities] = useState([
+  const [communities, setCommunities] = useState([
     {
       id: '12312312098381209389012809312809809312',
       title: 'Eu odeio acordar cedo',
@@ -73,14 +72,14 @@ export default function Home() {
                 console.log('Campo: ', dataForm.get('title'))
                 console.log('Campo: ', dataForm.get('image'))
 
-                const comunity = {
+                const community = {
                   id: new Date().toISOString,
                   title: dataForm.get('title'),
                   image: dataForm.get('image')
                 }
-                // spread operator - espalha o conteúdo da array comunities dentro da array updated
-                const comunitiesUpdated = [...comunities, comunity]
-                setComunities(comunitiesUpdated)
+                // spread operator - espalha o conteúdo da array communities dentro da array updated
+                const communitiesUpdated = [...communities, community]
+                setCommunities(communitiesUpdated)
               }}
             >
               <div>
@@ -107,10 +106,10 @@ export default function Home() {
           style={{ gridArea: 'profileRelationsArea' }}
         >
           <ProfileRelationsBoxWrapper>
-            <h2 className="smallTitle">Comunidades ({comunities.length})</h2>
+            <h2 className="smallTitle">Comunidades ({communities.length})</h2>
             <ul>
               {/* passa em todos os valores do array */}
-              {comunities.map(currentItem => {
+              {communities.map(currentItem => {
                 return (
                   <li key={currentItem.id}>
                     <a href={`/users/${currentItem.title}`}>
