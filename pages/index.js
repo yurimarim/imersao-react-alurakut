@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import MainGrid from '../src/components/MainGrid'
 import Box from '../src/components/Box'
 import {
@@ -30,6 +30,29 @@ function ProfileSideBar(props) {
   )
 }
 
+function ProfileRelationsBox(props) {
+  return (
+    <ProfileRelationsBoxWrapper>
+      <h2 className="smallTitle">
+        {props.title}({props.items.length})
+      </h2>
+      <ul>
+        {/* passa em todos os valores do array
+        {followers.map(currentItem => {
+          return (
+            <li key={currentItem}>
+              <a href={`https://github.com/${currentItem}.png`}>
+                <img src={currentItem.image} />
+                <span>{currentItem.title}</span>
+              </a>
+            </li>
+          )
+        })} */}
+      </ul>
+    </ProfileRelationsBoxWrapper>
+  )
+}
+
 export default function Home() {
   const githubUser = 'yurimarim'
   const [communities, setCommunities] = useState([
@@ -47,10 +70,24 @@ export default function Home() {
     'marcobrunodev',
     'felipefialho'
   ]
+  const [followers, setFollowers] = useState([])
+  // 0 - Pegar o array de dados do github users
+  useEffect(() => {
+    fetch('https://api.github.com/users/yurimarim/followers')
+      .then(servidorAnswer => {
+        return servidorAnswer.json()
+      })
+      .then(servidorCompleteAnswer => {
+        setFollowers(servidorCompleteAnswer)
+      })
+  }, [])
+
+  // 1 - Criar um box que vai ter um map, baseado nos items do array
+  // que pegamos do GitHub
 
   return (
     <>
-      <AlurakutMenu />
+      <AlurakutMenu githubUser={githubUser} />
       <MainGrid>
         <div className="profileArea" style={{ gridArea: 'profileArea' }}>
           <ProfileSideBar githubUser={githubUser} />
@@ -105,6 +142,7 @@ export default function Home() {
           className="profileRelationsArea"
           style={{ gridArea: 'profileRelationsArea' }}
         >
+          <ProfileRelationsBox title="Seguidores " items={followers} />
           <ProfileRelationsBoxWrapper>
             <h2 className="smallTitle">Comunidades ({communities.length})</h2>
             <ul>
