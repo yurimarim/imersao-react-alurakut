@@ -55,13 +55,7 @@ function ProfileRelationsBox(props) {
 
 export default function Home() {
   const githubUser = 'yurimarim'
-  const [communities, setCommunities] = useState([
-    {
-      id: '12312312098381209389012809312809809312',
-      title: 'Eu odeio acordar cedo',
-      image: 'https://alurakut.vercel.app/capa-comunidade-01.jpg'
-    }
-  ])
+  const [communities, setCommunities] = useState([])
   const favPeople = [
     'juunegreiros',
     'omariosouto',
@@ -72,6 +66,7 @@ export default function Home() {
   ]
   const [followers, setFollowers] = useState([])
   // 0 - Pegar o array de dados do github users
+  // GET
   useEffect(() => {
     fetch('https://api.github.com/users/yurimarim/followers')
       .then(servidorAnswer => {
@@ -79,6 +74,33 @@ export default function Home() {
       })
       .then(servidorCompleteAnswer => {
         setFollowers(servidorCompleteAnswer)
+      })
+
+    // API GraphQL
+    fetch('https://graphql.datocms.com/', {
+      method: 'POST',
+      headers: {
+        Authorization: '1cf52f3e062a907dcfe119429bdfea',
+        'Content-Type': 'application/json',
+        Accept: 'application/json'
+      },
+      // --data-binary
+      body: JSON.stringify({
+        query: `query {
+        allCommunities {
+          id
+          title
+          imageUrl
+          creatorSlug
+        }
+      }`
+      })
+    })
+      .then(response => response.json()) // Pega o retorno do response.json() - recebe response como parâmetro
+      .then(fullAnswer => {
+        const communityDatoCms = fullAnswer.data.allCommunities
+        console.log(communityDatoCms)
+        setCommunities(communityDatoCms)
       })
   }, [])
 
@@ -110,13 +132,25 @@ export default function Home() {
                 console.log('Campo: ', dataForm.get('image'))
 
                 const community = {
-                  id: new Date().toISOString,
                   title: dataForm.get('title'),
-                  image: dataForm.get('image')
+                  imageUrl: dataForm.get('image'),
+                  creatorSlug: githubUser
                 }
-                // spread operator - espalha o conteúdo da array communities dentro da array updated
-                const communitiesUpdated = [...communities, community]
-                setCommunities(communitiesUpdated)
+
+                fetch('/api/communities', {
+                  method: 'POST',
+                  headers: {
+                    'Content-Type': 'application/json'
+                  },
+                  body: JSON.stringify(community)
+                }).then(async response => {
+                  const data = await response.json()
+                  console.log(data.recordCreated)
+                  const community = data.recordCreated
+                  // spread operator - espalha o conteúdo da array communities dentro da array updated
+                  const communitiesUpdated = [...communities, community]
+                  setCommunities(communitiesUpdated)
+                })
               }}
             >
               <div>
@@ -150,8 +184,8 @@ export default function Home() {
               {communities.map(currentItem => {
                 return (
                   <li key={currentItem.id}>
-                    <a href={`/users/${currentItem.title}`}>
-                      <img src={currentItem.image} />
+                    <a href={`/communities/${currentItem.id}`}>
+                      <img src={currentItem.imageUrl} />
                       <span>{currentItem.title}</span>
                     </a>
                   </li>
