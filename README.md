@@ -1,7 +1,7 @@
 <h1 align="center">Alurakut</h1>
 <h3 align="center">Projeto desenvolvido durante a 3° edição da Imersão React da Alura</h3>
 
-## Clique para visualizar o projeto
+## Clique para visualizar o projeto:
 
 - [Clique aqui](https://imersao-react-alurakut-roan.vercel.app)
 
