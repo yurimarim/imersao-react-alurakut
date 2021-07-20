@@ -39,6 +39,16 @@ function ProfileRelationsBox(props) {
         {props.title}({props.items.length})
       </h2>
       <ul>
+        {props.items.slice(0, 6).map(currentItem => {
+          return (
+            <li key={currentItem.id}>
+              <a href={`https://github.com/${currentItem.title}`}>
+                <img src={currentItem.imageUrl} />
+                <span>{currentItem.title}</span>
+              </a>
+            </li>
+          )
+        })}
         {/* passa em todos os valores do array
         {followers.map(currentItem => {
           return (
@@ -106,8 +116,13 @@ export default function Home(props) {
       })
   }, [])
 
-  // 1 - Criar um box que vai ter um map, baseado nos items do array
-  // que pegamos do GitHub
+  const friends = followers.map((item, i) => {
+    return {
+      id: i,
+      title: item.login,
+      imageUrl: `https://github.com/${item.login}.png`
+    }
+  })
 
   return (
     <>
@@ -178,7 +193,7 @@ export default function Home(props) {
           className="profileRelationsArea"
           style={{ gridArea: 'profileRelationsArea' }}
         >
-          <ProfileRelationsBox title="Seguidores " items={followers} />
+          <ProfileRelationsBox title="Seguidores " items={friends} />
           <ProfileRelationsBoxWrapper>
             <h2 className="smallTitle">Comunidades ({communities.length})</h2>
             <ul>
