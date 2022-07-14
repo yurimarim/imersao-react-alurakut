@@ -15,9 +15,9 @@
 
 ## Tecnologias Utilizadas e Documentações
 
-- [React](https://pt-br.reactjs.org/docs/getting-started.html)
-- [Vercel](https://vercel.com/docs)
-- [DatoCMS](https://www.datocms.com/docs)
+- [ ] [React](https://pt-br.reactjs.org/docs/getting-started.html)
+- [ ] [Vercel](https://vercel.com/docs)
+- [ ] [DatoCMS](https://www.datocms.com/docs)
 
 ## Clonar o projeto
 
